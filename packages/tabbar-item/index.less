@@ -11,14 +11,14 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: 12px;
-  line-height: 1;
-  .theme(color, '@gray-darker');
+  .theme(font-size, '@tabbar-item-font-size');
+  .theme(line-height, '@tabbar-item-line-height');
+  .theme(color, '@tabbar-item-text-color');
 
   &__icon {
     position: relative;
-    margin-bottom: 5px;
-    font-size: 18px;
+    .theme(margin-bottom, '@tabbar-item-margin-bottom');
+    .theme(font-size, '@tabbar-item-icon-size');
 
     &--dot {
       &::after {
@@ -35,6 +35,6 @@
   }
 
   &--active {
-    .theme(color, '@blue');
+    .theme(color, '@tabbar-item-active-color');
   }
 }

@@ -8,6 +8,7 @@ VantComponent({
 
   props: {
     disabled: Boolean,
+    vertical: Boolean,
     useButtonSlot: Boolean,
     activeColor: String,
     inactiveColor: String,
@@ -63,7 +64,10 @@ VantComponent({
       this.dragStatus = 'draging';
 
       this.getRect('.van-slider').then((rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
-        const diff = this.deltaX / rect.width * 100;
+        const { vertical } = this.data;
+        const delta = vertical ? this.deltaY : this.deltaX;
+        const total = vertical ? rect.height : rect.width;
+        const diff = (delta / total) * this.range;
         this.newValue = this.startValue + diff;
         this.updateValue(this.newValue, false, true);
       });
@@ -84,21 +88,28 @@ VantComponent({
       const { min } = this.data;
 
       this.getRect('.van-slider').then((rect: WechatMiniprogram.BoundingClientRectCallbackResult) => {
-        const value = (event.detail.x - rect.left) / rect.width * this.getRange() + min;
+        const { vertical } = this.data;
+        const delta = vertical ? event.detail.y - rect.top : event.detail.x - rect.left;
+        const total = vertical ? rect.height : rect.width;
+
+        const value = (delta / total) * this.getRange() + min;
         this.updateValue(value, true);
       });
     },
 
     updateValue(value: number, end: boolean, drag: boolean) {
       value = this.format(value);
-      const { barHeight, min } = this.data;
+      const { barHeight, min, vertical } = this.data;
       const width = `${((value - min) * 100) / this.getRange()}%`;
+
+      const mainAxis = vertical ? 'height' : 'width';
+      const crossAxis = vertical ? 'width' : 'height';
 
       this.setData({
         value,
         barStyle: `
-          width: ${width};
-          height: ${addUnit(barHeight)};
+          ${mainAxis}: ${width};
+          ${crossAxis}: ${addUnit(barHeight)};
           ${drag ? 'transition: none;' : ''}
         `,
       });

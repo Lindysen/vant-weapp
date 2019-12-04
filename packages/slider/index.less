@@ -41,4 +41,15 @@
   &--disabled {
     opacity: 0.3;
   }
+
+  &--vertical {
+    display: inline-block;
+    height: 100%;
+
+    .van-slider__button-wrapper {
+      top: auto;
+      bottom: 0;
+      transform: translate3d(50%, 50%, 0);
+    }
+  }
 }

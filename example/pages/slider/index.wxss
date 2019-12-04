@@ -11,3 +11,8 @@
   border-radius: 100px;
   background-color: #ee0a24;
 }
+
+.vertical-block {
+  height:120px;
+  padding-left:30px;
+}

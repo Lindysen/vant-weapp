@@ -54,3 +54,15 @@
     </view>
   </van-slider>
 </demo-block>
+
+<demo-block title="垂直方向">
+  <view class="vertical-block ">
+    <van-slider
+      value="50"
+      vertical
+      custom-class="slider"
+      bind:change="onChange"
+      bind:drag="onDrag"
+    />
+  </view>
+</demo-block>
